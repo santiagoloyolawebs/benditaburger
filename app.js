@@ -13,7 +13,7 @@ const MENU = {
 
 let carrito = [];
 // --- NÚMERO DE WHATSAPP ACTUALIZADO ---
-const numeroWhatsappGlobal = "541151124224"; 
+const numeroWhatsappGlobal = "543777388036"; 
 
 const contenedorBurgers = document.getElementById('productos-contenedor');
 const cartSidebar = document.getElementById('cart-sidebar');
