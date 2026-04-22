@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bendita Burger</title>
+    <link rel="icon" href="assets/icono.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Gochi+Hand&family=Montserrat:wght@400;600;800&family=Shrikhand&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="assets/logo.png" alt="Bendita Burger Logo" class="logo-img">
+            </div>
+            <button class="cart-toggle-btn" id="btn-abrir-carrito">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span id="cart-counter" class="cart-counter">0</span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="cart-overlay" id="cart-overlay"></div>
+
+    <aside class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h2>Tu Pedido</h2>
+            <button class="close-cart-btn" id="btn-cerrar-carrito"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="cart-body">
+            <ul id="lista-carrito" class="cart-list"></ul>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-options">
+                <div class="form-group">
+                    <label for="metodo-pago">Método de pago:</label>
+                    <select id="metodo-pago">
+                        <option value="Efectivo">Efectivo</option>
+                        <option value="Transferencia">Transferencia</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="metodo-entrega">Entrega:</label>
+                    <select id="metodo-entrega" onchange="toggleDireccion()">
+                        <option value="Retiro por local">Retirar por el local</option>
+                        <option value="Delivery">Delivery</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="grupo-direccion" style="display: none;">
+                    <label for="direccion-envio">Dirección de envío:</label>
+                    <input type="text" id="direccion-envio" placeholder="Ej: Calle Falsa 123">
+                </div>
+            </div>
+
+            <div class="cart-notes">
+                <label for="pedido-notas" style="font-size: 0.9rem; font-weight: 800; display: block; margin-bottom: 5px;">Aclaraciones (Opcional):</label>
+                <textarea id="pedido-notas" placeholder="Ej: Sin cebolla, mucho ketchup..."></textarea>
+            </div>
+            
+            <div class="cart-total-box">
+                <span>Total:</span>
+                <span id="precio-total">$0</span>
+            </div>
+            <button id="btn-whatsapp" class="btn-whatsapp" disabled>Pedir por WhatsApp</button>
+        </div>
+    </aside>
+
+    <div class="main-content-wrapper">
+        <header class="hero" id="inicio">
+            <div class="hero-content">
+                <h1 class="landing-title" style="line-height: 1.05;">
+                    <span style="display: block; font-size: 0.35em; color: var(--texto-claro); letter-spacing: 3px; margin-bottom: 10px; font-family: var(--fuente-texto); font-weight: 800; text-transform: uppercase;">
+                        Tus dramas<br>de lado
+                    </span>
+                    <span style="color: var(--color-primario); font-size: 1.6em; display: block; margin-bottom: -5px; text-shadow: 2px 2px 10px rgba(0,0,0,0.8);">BENDITA</span>
+                    <span style="color: var(--texto-claro); font-size: 1.1em; display: block; text-shadow: 2px 2px 10px rgba(0,0,0,0.8);">AL FRENTE</span>
+                </h1>
+                <a href="#menu-seccion" class="btn-hero" style="margin-top: 40px;">Hacer Pedido</a>
+            </div>
+        </header>
+
+        <main class="menu-container" id="menu-seccion">
+            <h2 class="section-title">Nuestras <span style="color: var(--color-primario);">Burgers</span></h2>
+            
+            <div id="productos-contenedor" class="productos-grid" style="margin-top: 40px;"></div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="footer-info">
+                <p><i class="fa-solid fa-location-dot"></i> Goya, Corrientes</p>
+                <p id="footer-horarios"><i class="fa-regular fa-clock"></i> Martes a Domingo • 20 a 00:30 hs</p>
+                <p><i class="fa-solid fa-motorcycle"></i> Envíos a domicilio</p>
+            </div>
+            <a href="#" target="_blank" class="btn-instagram">
+                <i class="fa-brands fa-instagram"></i> Seguinos en Instagram
+            </a>
+        </footer>
+    </div>
+
+    <div id="notificacion" class="toast-notification">¡Agregado al pedido!</div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
