@@ -129,6 +129,12 @@ function mostrarNotificacion(mensaje) {
 
 // ================= WHATSAPP SEND =================
 btnWhatsApp.addEventListener('click', () => {
+    
+    // 👇 ESTO LE AVISA A VERCEL QUE ALGUIEN TOCÓ EL BOTÓN 👇
+    if (window.va) {
+        window.va('event', 'Clic en Hacer Pedido');
+    }
+
     let subtotal = 0;
     let m = "*NUEVO PEDIDO - BENDITA BURGER*\n\n";
     carrito.forEach(i => { 
