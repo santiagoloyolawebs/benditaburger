@@ -1,110 +1,239 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bendita Burger</title>
-    <link rel="icon" href="assets/icono.png" type="image/png">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Gochi+Hand&family=Montserrat:wght@400;600;800&family=Shrikhand&display=swap" rel="stylesheet">
+    <title>Bendita Burger | Take Away & Delivery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <script defer src="/_vercel/insights/script.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#D32F2F',
+                            black: '#000000',
+                            white: '#FFFFFF',
+                            gray: '#f3f4f6'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
+<body class="bg-brand-gray text-brand-black antialiased font-sans flex flex-col min-h-screen relative">
 
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <img src="assets/logo.png" alt="Bendita Burger Logo" class="logo-img">
+    <nav class="sticky top-0 z-50 bg-brand-red shadow-md border-b border-red-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <img src="img/logo.png" alt="Bendita Burger" class="h-10 md:h-12 w-auto object-contain">
+                </div>
+                
+                <div class="flex items-center">
+                    <button id="nav-cart-btn" class="bg-brand-black text-brand-white px-4 py-2 rounded-lg font-bold text-sm flex items-center hover:bg-gray-800 transition-colors shadow-md border border-gray-900">
+                        <i class="fa-solid fa-cart-shopping mr-2"></i>
+                        <span id="nav-cart-qty">0</span> &nbsp;-&nbsp; $<span id="nav-cart-total">0,00</span>
+                    </button>
+                </div>
             </div>
-            <button class="cart-toggle-btn" id="btn-abrir-carrito">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <span id="cart-counter" class="cart-counter">0</span>
-            </button>
         </div>
     </nav>
 
-    <div class="cart-overlay" id="cart-overlay"></div>
-
-    <aside class="cart-sidebar" id="cart-sidebar">
-        <div class="cart-header">
-            <h2>Tu Pedido</h2>
-            <button class="close-cart-btn" id="btn-cerrar-carrito"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <div class="cart-body">
-            <ul id="lista-carrito" class="cart-list"></ul>
-        </div>
-        <div class="cart-footer">
-            <div class="cart-options">
-                <div class="form-group">
-                    <label for="metodo-pago">Método de pago:</label>
-                    <select id="metodo-pago">
-                        <option value="Efectivo">Efectivo</option>
-                        <option value="Transferencia">Transferencia</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="metodo-entrega">Entrega:</label>
-                    <select id="metodo-entrega" onchange="toggleDireccion()">
-                        <option value="Retiro por local">Retirar por el local</option>
-                        <option value="Delivery">Delivery</option>
-                    </select>
-                </div>
-
-                <div class="form-group" id="grupo-direccion" style="display: none;">
-                    <label for="direccion-envio">Dirección de envío:</label>
-                    <input type="text" id="direccion-envio" placeholder="Ej: Calle Falsa 123">
-                </div>
-            </div>
-
-            <div class="cart-notes">
-                <label for="pedido-notas" style="font-size: 0.9rem; font-weight: 800; display: block; margin-bottom: 5px;">Aclaraciones (Opcional):</label>
-                <textarea id="pedido-notas" placeholder="Ej: Sin cebolla, mucho ketchup..."></textarea>
-            </div>
-            
-            <div class="cart-total-box">
-                <span>Total:</span>
-                <span id="precio-total">$0</span>
-            </div>
-            <button id="btn-whatsapp" class="btn-whatsapp" disabled>Pedir por WhatsApp</button>
-        </div>
-    </aside>
-
-    <div class="main-content-wrapper">
-        <header class="hero" id="inicio">
-            <div class="hero-content">
-                <h1 class="landing-title" style="line-height: 1.05;">
-                    <span style="display: block; font-size: 0.35em; color: var(--texto-claro); letter-spacing: 3px; margin-bottom: 10px; font-family: var(--fuente-texto); font-weight: 800; text-transform: uppercase;">
-                        Tus dramas<br>de lado
-                    </span>
-                    <span style="color: var(--color-primario); font-size: 1.6em; display: block; margin-bottom: -5px; text-shadow: 2px 2px 10px rgba(0,0,0,0.8);">BENDITA</span>
-                    <span style="color: var(--texto-claro); font-size: 1.1em; display: block; text-shadow: 2px 2px 10px rgba(0,0,0,0.8);">AL FRENTE</span>
-                </h1>
-                <a href="#menu-seccion" class="btn-hero" style="margin-top: 40px;">Hacer Pedido</a>
+    <div id="main-view" class="block flex-grow flex flex-col">
+        <header class="relative bg-brand-black h-[45vh] flex items-center justify-center overflow-hidden">
+            <img src="img/portada.jpg" alt="Bendita Burger Portada" class="absolute inset-0 w-full h-full object-cover opacity-40">
+            <div class="relative z-10 text-center px-4 flex flex-col items-center">
+                <p class="text-brand-white font-black text-sm md:text-base tracking-widest mb-1 uppercase drop-shadow-md">Tus dramas de lado</p>
+                <h1 class="text-brand-red font-black text-5xl md:text-7xl italic leading-none drop-shadow-lg uppercase tracking-tighter">BENDITA</h1>
+                <h1 class="text-brand-white font-black text-5xl md:text-7xl italic leading-none mb-6 drop-shadow-lg uppercase tracking-tighter">AL FRENTE</h1>
+                <a href="#catalogo" class="inline-block bg-brand-red text-brand-white font-black px-8 py-3 rounded-full text-base hover:scale-105 transition-transform shadow-lg mt-2">
+                    Hacé tu pedido
+                </a>
             </div>
         </header>
 
-        <main class="menu-container" id="menu-seccion">
-            <h2 class="section-title">Nuestras <span style="color: var(--color-primario);">Burgers</span></h2>
-            
-            <div id="productos-contenedor" class="productos-grid" style="margin-top: 40px;"></div>
+        <main id="catalogo" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full">
+            <div class="flex space-x-2 overflow-x-auto pb-4 mb-6 scrollbar-hide">
+                <button class="bg-brand-red text-brand-white font-bold text-sm px-5 py-1.5 rounded-full whitespace-nowrap shadow-sm">TODOS</button>
+                <button class="bg-white text-gray-600 font-bold text-sm px-5 py-1.5 rounded-full whitespace-nowrap border hover:border-brand-red hover:text-brand-black transition-colors">BURGERS</button>
+                <button class="bg-white text-gray-600 font-bold text-sm px-5 py-1.5 rounded-full whitespace-nowrap border hover:border-brand-red hover:text-brand-black transition-colors">ACOMPAÑAMIENTOS</button>
+                <button class="bg-white text-gray-600 font-bold text-sm px-5 py-1.5 rounded-full whitespace-nowrap border hover:border-brand-red hover:text-brand-black transition-colors">BEBIDAS</button>
+            </div>
+            <div id="product-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-4"></div>
         </main>
 
-        <footer class="site-footer">
-            <div class="footer-info">
-                <p><i class="fa-solid fa-location-dot"></i> Goya, Corrientes</p>
-                <p id="footer-horarios"><i class="fa-regular fa-clock"></i> Martes a Domingo • 20 a 00:30 hs</p>
-                <p><i class="fa-solid fa-motorcycle"></i> Envíos a domicilio</p>
+        <footer id="footer-info" class="bg-[#0a0a0a] text-white pt-10 pb-6 border-t-[4px] border-brand-red mt-auto">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                    <div class="mb-4 md:mb-0">
+                        <img src="img/logo.png" alt="Bendita Burger" class="h-12 md:h-16 w-auto object-contain">
+                    </div>
+                    <div class="flex space-x-6 text-xl">
+                        <a href="#" class="text-gray-400 hover:text-brand-red hover:-translate-y-1 transform transition-all duration-300"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-brand-red hover:-translate-y-1 transform transition-all duration-300"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-brand-red hover:-translate-y-1 transform transition-all duration-300"><i class="fa-brands fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                <div class="border-t border-gray-800 mb-8"></div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
+                    <div class="flex flex-col items-center md:items-start group">
+                        <i class="fa-solid fa-motorcycle text-brand-red text-3xl mb-3 group-hover:scale-110 transition-transform"></i>
+                        <h4 class="font-black text-base uppercase mb-1 tracking-wide">Servicio</h4>
+                        <p class="text-gray-400 font-semibold text-sm">Delivery & Take away</p>
+                    </div>
+                    <div class="flex flex-col items-center md:items-start group">
+                        <i class="fa-solid fa-location-dot text-brand-red text-3xl mb-3 group-hover:scale-110 transition-transform"></i>
+                        <h4 class="font-black text-base uppercase mb-1 tracking-wide">Ubicación</h4>
+                        <p class="text-gray-400 font-semibold text-sm">Goya, Corrientes</p>
+                    </div>
+                    <div class="flex flex-col items-center md:items-start group">
+                        <i class="fa-regular fa-clock text-brand-red text-3xl mb-3 group-hover:scale-110 transition-transform"></i>
+                        <h4 class="font-black text-base uppercase mb-1 tracking-wide">Días y Horarios</h4>
+                        <p class="text-gray-400 font-semibold text-xs tracking-widest">MARTES A DOMINGO</p>
+                        <p class="text-brand-red font-black text-base mt-1">20:00hs a 00:30hs</p>
+                    </div>
+                </div>
+                <div class="border-t border-gray-800 mt-10 pt-6 text-center text-xs text-gray-600 font-semibold">
+                    &copy; 2026 Bendita Burger. Todos los derechos reservados.
+                </div>
             </div>
-            <a href="#" target="_blank" class="btn-instagram">
-                <i class="fa-brands fa-instagram"></i> Seguinos en Instagram
-            </a>
         </footer>
     </div>
 
-    <div id="notificacion" class="toast-notification">¡Agregado al pedido!</div>
-    
-    <script src="app.js"></script>
+    <div id="checkout-view" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-32 lg:pb-8 relative z-10">
+        <button id="btn-back-menu" class="text-gray-500 text-sm font-bold mb-4 hover:text-brand-black transition-colors flex items-center w-fit">
+            <i class="fa-solid fa-arrow-left mr-2"></i> Volver al menú
+        </button>
+        <h2 class="text-3xl font-black italic mb-6 uppercase">Finalizar Pedido</h2>
+
+        <div class="flex flex-col lg:flex-row gap-6">
+            <div class="flex-1 space-y-4">
+                
+                <section class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-bold text-lg mb-3 border-b pb-2">Datos de Contacto</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div>
+                            <input type="text" id="chk-nombre" placeholder="Nombre y Apellido *" class="w-full p-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-red outline-none bg-gray-50 transition-colors">
+                            <p id="err-nombre" class="text-red-500 text-[11px] font-bold mt-1 hidden pl-1">Este campo es obligatorio</p>
+                        </div>
+                        <div>
+                            <input type="tel" id="chk-celular" placeholder="Teléfono *" class="w-full p-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-red outline-none bg-gray-50 transition-colors">
+                            <p id="err-celular" class="text-red-500 text-[11px] font-bold mt-1 hidden pl-1">Este campo es obligatorio</p>
+                        </div>
+                        <div>
+                            <input type="number" id="chk-dni" placeholder="DNI *" class="w-full p-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-red outline-none bg-gray-50 transition-colors">
+                            <p id="err-dni" class="text-red-500 text-[11px] font-bold mt-1 hidden pl-1">Este campo es obligatorio</p>
+                        </div>
+                        <div>
+                            <input type="email" id="chk-email" placeholder="Email (Opcional)" class="w-full p-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-red outline-none bg-gray-50 transition-colors">
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-bold text-lg mb-3 border-b pb-2">Logística</h3>
+                    <select id="chk-logistica" class="w-full p-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-red outline-none bg-gray-50 font-semibold cursor-pointer transition-colors">
+                        <option value="retiro_local">Retiro por el Local</option>
+                        <option value="envio_domicilio">Envío a Domicilio</option>
+                    </select>
+                    
+                    <div id="container-direccion" class="hidden mt-3">
+                        <input type="text" id="chk-direccion" placeholder="Dirección de envío completa *" class="w-full p-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-red outline-none bg-gray-50 transition-colors">
+                        <p id="err-direccion" class="text-red-500 text-[11px] font-bold mt-1 hidden pl-1">Debe ingresar una dirección para el envío</p>
+                    </div>
+                </section>
+
+                <section class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="font-bold text-lg mb-3 border-b pb-2">Pago y Detalles</h3>
+                    <div class="mb-3">
+                        <label class="block text-xs font-bold text-gray-700 mb-1">Método de Pago</label>
+                        <select id="chk-pago" class="w-full p-2.5 text-sm border-2 border-brand-red rounded-lg bg-red-50 font-bold focus:ring-0 outline-none cursor-pointer">
+                            <option value="Efectivo">Efectivo</option>
+                            <option value="Transferencia">Transferencia</option>
+                        </select>
+                    </div>
+                    <div>
+                        <textarea id="chk-notas" rows="2" placeholder="Notas del pedido (Aclaraciones, cambio necesario, etc.)" class="w-full p-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-brand-red outline-none bg-gray-50 transition-colors"></textarea>
+                    </div>
+                </section>
+            </div>
+
+            <div class="lg:w-80">
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 lg:sticky lg:top-24">
+                    <h3 class="font-bold text-lg mb-3 border-b pb-2">Resumen</h3>
+                    <div id="checkout-items" class="space-y-2 mb-4 max-h-52 overflow-y-auto custom-scrollbar text-sm"></div>
+                    
+                    <div class="fixed bottom-0 left-0 w-full bg-white p-4 border-t border-gray-200 shadow-[0_-8px_15px_-3px_rgba(0,0,0,0.1)] z-[60] lg:static lg:w-auto lg:p-0 lg:border-t lg:pt-3 lg:shadow-none lg:z-auto">
+                        <div class="flex justify-between font-black text-xl mb-3 lg:mb-4 max-w-7xl mx-auto px-2 lg:px-0">
+                            <span>TOTAL</span>
+                            <span>$<span id="checkout-total-price">0,00</span></span>
+                        </div>
+                        <button id="btn-confirm-whatsapp" class="w-full max-w-7xl mx-auto bg-[#25D366] text-white font-black py-3 rounded-xl text-base hover:bg-[#1ebe5d] transition-colors flex items-center justify-center shadow-md">
+                            <i class="fa-brands fa-whatsapp text-xl mr-2"></i> CONFIRMAR PEDIDO
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="product-modal" class="fixed inset-0 bg-brand-black bg-opacity-80 z-[60] hidden opacity-0 transition-opacity flex items-center justify-center p-4 overscroll-contain">
+        <div class="bg-white w-full max-w-md rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[85vh] relative transform scale-95 transition-transform" id="modal-content-wrapper">
+            <button id="btn-close-modal" class="absolute top-3 right-3 bg-white/90 rounded-full w-7 h-7 flex items-center justify-center text-brand-black text-sm font-bold shadow hover:bg-gray-200 z-10"><i class="fa-solid fa-xmark"></i></button>
+            <img id="modal-img" src="" alt="Producto" class="w-full h-36 object-cover">
+            
+            <div class="p-5 overflow-y-auto flex-1 custom-scrollbar overscroll-contain">
+                <h2 id="modal-title" class="text-xl font-black mb-1"></h2>
+                <p id="modal-desc" class="text-gray-500 text-xs mb-4 leading-tight"></p>
+                
+                <div class="flex items-center justify-between bg-gray-50 p-3 rounded-lg mb-4 border">
+                    <span class="font-bold text-sm">Cantidad</span>
+                    <div class="flex items-center space-x-3">
+                        <button id="btn-qty-minus" class="w-7 h-7 bg-white rounded-full shadow font-bold text-sm hover:bg-gray-100 transition-colors">-</button>
+                        <span id="modal-qty" class="font-black text-lg">1</span>
+                        <button id="btn-qty-plus" class="w-7 h-7 bg-brand-red text-white rounded-full shadow font-bold text-sm hover:bg-red-600 transition-colors">+</button>
+                    </div>
+                </div>
+
+                <div id="modal-variants-container" class="mb-4 hidden">
+                    <h3 class="font-bold text-xs text-gray-400 uppercase mb-2 tracking-wide">Tamaño</h3>
+                    <div id="modal-variants-list" class="flex space-x-2"></div>
+                </div>
+
+                <div id="modal-extras-container" class="mb-4"><h3 class="font-bold text-xs text-gray-400 uppercase mb-2 tracking-wide">Extras</h3><div id="modal-extras-list" class="space-y-1.5"></div></div>
+                <div id="modal-removables-container"><h3 class="font-bold text-xs text-gray-400 uppercase mb-2 tracking-wide">Quitar Ingredientes</h3><div id="modal-removables-list" class="space-y-1.5"></div></div>
+            </div>
+            
+            <div class="p-4 bg-white border-t flex justify-between items-center shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+                <div class="font-black text-xl">$<span id="modal-total-price">0</span></div>
+                <button id="btn-add-to-cart" class="bg-brand-red text-brand-white font-black py-2.5 px-6 rounded-lg hover:bg-red-600 transition-colors shadow-sm text-sm">AGREGAR</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="cart-overlay" class="fixed inset-0 bg-brand-black bg-opacity-50 z-[55] hidden opacity-0 transition-opacity"></div>
+    <aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[350px] bg-white z-[60] transform translate-x-full transition-transform duration-300 shadow-2xl flex flex-col overscroll-contain">
+        <div class="p-5 bg-brand-red text-white flex justify-between items-center shadow-sm">
+            <h2 class="font-black text-xl italic uppercase tracking-tight">Mi Pedido</h2>
+            <button id="btn-close-cart" class="text-white text-xl hover:opacity-70 transition-opacity"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div id="cart-items-container" class="flex-1 p-4 overflow-y-auto space-y-3 custom-scrollbar bg-gray-50 overscroll-contain"></div>
+        <div class="p-5 bg-white border-t border-gray-200 shadow-[0_-10px_15px_-3px_rgba(0,0,0,0.05)]">
+            <div class="flex justify-between items-center font-black text-xl mb-3"><span>TOTAL</span><span>$<span id="drawer-total-price">0,00</span></span></div>
+            <button id="btn-goto-checkout" class="w-full bg-brand-black text-brand-red font-black py-3 rounded-lg text-base mb-2 hidden hover:bg-gray-800 transition-colors shadow-md">CONFIRMAR COMPRA</button>
+            <button id="btn-continue-shopping" class="w-full bg-white border-2 border-gray-200 text-gray-600 font-bold py-2.5 rounded-lg text-sm hover:bg-gray-50 transition-colors">Seguir Comprando</button>
+        </div>
+    </aside>
+
+    <script src="script.js"></script>
 </body>
 </html>

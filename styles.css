@@ -1,0 +1,85 @@
+/* ========================================================
+   ESTILOS PERSONALIZADOS (Complemento a Tailwind CSS)
+   ======================================================== */
+
+/* 1. Ocultar scrollbar en los filtros horizontales (Mantiene la funcionalidad de scroll) */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* Soporte para IE y Edge */
+    scrollbar-width: none;     /* Soporte para Firefox */
+}
+
+/* 2. Scrollbar estilizada y moderna para el Modal y el Carrito Lateral */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #f9fafb; /* Color muy suave, equivalente a gray-50 */
+    border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #d1d5db; /* Gris medio para el indicador */
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #D32F2F; /* Al pasar el mouse, cambia al Rojo de la marca */
+}
+
+/* 3. Utilidad para bloquear el scroll de la página al abrir modales/carritos */
+body.modal-open {
+    overflow: hidden;
+    /* Añade un padding a la derecha igual al ancho de una scrollbar típica 
+       para evitar que el contenido "salte" o se desplace hacia los lados 
+       cuando la barra nativa del navegador desaparece */
+    padding-right: 15px; 
+}
+
+/* 4. Ajustes menores para evitar selección accidental de texto en controles numéricos */
+#btn-qty-minus, #btn-qty-plus {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* 5. Animaciones para el carrito (Salto largo y Vuelo Lento) */
+
+/* El icono volador ahora es un icono FontAwesome, vuela lento por 1.2 segundos */
+.flying-item {
+    position: fixed;
+    z-index: 99999; /* Por encima de todo */
+    font-size: 2.5rem; /* Tamaño grande para que se vea claro */
+    color: #D32F2F; /* Color rojo de la marca */
+    pointer-events: none;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    /* Transición lenta con easing para que empiece un poco rápido y frene al llegar */
+    transition: left 1.2s ease-in-out, 
+                top 1.2s ease-in-out, 
+                opacity 1.2s ease-in, 
+                transform 1.2s ease-in-out;
+}
+
+/* Animación del carrito más llamativa y larga (0.8s) */
+@keyframes pop {
+    0%   { transform: scale(1); background-color: transparent; }
+    20%  { transform: scale(1.15) rotate(-3deg); background-color: #D32F2F; color: #fff; box-shadow: 0 0 15px rgba(211, 47, 47, 0.6); }
+    50%  { transform: scale(1.2) rotate(3deg); background-color: #D32F2F; color: #fff; box-shadow: 0 0 20px rgba(211, 47, 47, 0.8); }
+    80%  { transform: scale(1.1) rotate(-2deg); background-color: #D32F2F; color: #fff; }
+    100% { transform: scale(1); background-color: transparent; }
+}
+
+.cart-pop {
+    animation: pop 0.8s ease-in-out !important; /* El !important asegura que sobreescriba colores de Tailwind mientras anima */
+}
+
+/* 6. Animación de "Temblor" (Shake) para validación de errores en el Checkout */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+}
+
+.shake {
+    animation: shake 0.4s ease-in-out;
+}
